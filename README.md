@@ -78,3 +78,8 @@ The script above is using the AWS CloudFormation service to create a new CloudFo
     * ParameterKey=S3Bucket,ParameterValue=s3://${BUCKET_NAME}/
 
 Basically, the script is creating a CloudFormation stack. It uses a CloudFormation template file stored locally and it creates the stack in the us-east-2 region. The script also sets two parameters that are passed to the CloudFormation template when creating the stack.
+
+Run the following command in the terminal to view the first 10 lines of the sample data:
+```
+head ~/environment/glue-workshop/data/lab1/csv/sample.csv
+```
