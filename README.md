@@ -55,3 +55,26 @@ This above script is performing the following actions:
 
 Basically, the script downloads a zip file, unzips it, creates some directories, clones a git repository, zips a directory within it, moves it, and finally copies various directories to an S3 bucket.
 
+### Creating Cloudformation stack
+
+```
+aws cloudformation create-stack --stack-name glueworkshop \
+            --template-body file://~/environment/glue-workshop/cloudformation/NoVPC.yaml \
+            --capabilities CAPABILITY_NAMED_IAM \
+            --region us-east-2 \
+            --parameters \
+            ParameterKey=UniquePostfix,ParameterValue=glueworkshop \
+            ParameterKey=S3Bucket,ParameterValue=s3://${BUCKET_NAME}/
+```
+
+The script above is using the AWS CloudFormation service to create a new CloudFormation stack named "glueworkshop". The following actions are being performed:
+1. Using the aws cloudformation create-stack command to create a new CloudFormation stack.
+2. The --stack-name parameter is set to "glueworkshop", which is the name of the stack being created.
+3. The --template-body parameter is set to "file://~/environment/glue-workshop/cloudformation/NoVPC.yaml", which specifies the location of the CloudFormation template file that will be used to create the stack.
+4. The --capabilities parameter is set to "CAPABILITY_NAMED_IAM", which is a required capability when the template includes IAM resources.
+5. The --region parameter is set to "us-east-2", which specifies the region in which the stack will be created.
+    * The --parameters parameter is used to pass two key-value pairs as parameters to the CloudFormation template:
+    * ParameterKey=UniquePostfix,ParameterValue=glueworkshop
+    * ParameterKey=S3Bucket,ParameterValue=s3://${BUCKET_NAME}/
+
+Basically, the script is creating a CloudFormation stack. It uses a CloudFormation template file stored locally and it creates the stack in the us-east-2 region. The script also sets two parameters that are passed to the CloudFormation template when creating the stack.
