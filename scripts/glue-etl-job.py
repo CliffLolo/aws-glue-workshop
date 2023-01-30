@@ -12,3 +12,15 @@ from pycountry_convert import (
     convert_country_name_to_country_alpha2,
     convert_country_alpha3_to_country_alpha2,
 )
+
+
+def get_country_code2(country_name):
+    country_code2 = 'US'
+    try:
+        country_code2 = convert_country_name_to_country_alpha2(country_name)
+    except KeyError:
+        country_code2 = ''
+    return country_code2
+
+
+udf_get_country_code2 = udf(lambda z: get_country_code2(z), StringType())
