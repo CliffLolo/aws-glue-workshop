@@ -30,4 +30,6 @@ sparkDF = spark.read.load("s3://${BUCKET_NAME}/input/lab2/sample.csv",
                           sep=",",
                           inferSchema="true",
                           header="true")
+sparkDF.printSchema()
+
 
