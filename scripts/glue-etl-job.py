@@ -24,3 +24,10 @@ def get_country_code2(country_name):
 
 
 udf_get_country_code2 = udf(lambda z: get_country_code2(z), StringType())
+
+sparkDF = spark.read.load("s3://${BUCKET_NAME}/input/lab2/sample.csv",
+                          format="csv",
+                          sep=",",
+                          inferSchema="true",
+                          header="true")
+
