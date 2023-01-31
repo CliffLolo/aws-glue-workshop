@@ -35,4 +35,18 @@ new_df = sparkDF.withColumn('country_code_2', udf_get_country_code2(col("Country
 new_df.printSchema()
 new_df.show(10)
 
+import sys
+from awsglue.transforms import *
+from awsglue.utils import getResolvedOptions
+from pyspark.context import SparkContext
+from awsglue.context import GlueContext
+from awsglue.job import Job
+from awsglue.dynamicframe import DynamicFrame
+
+glueContext = GlueContext(SparkContext.getOrCreate())
+
+dynaFrame = glueContext.create_dynamic_frame.from_catalog(database="glueworkshop", table_name="csv")
+dynaFrame.printSchema()
+dynaFrame.toDF().show(10)
+
 
