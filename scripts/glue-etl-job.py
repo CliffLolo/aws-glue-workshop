@@ -31,5 +31,8 @@ sparkDF = spark.read.load("s3://${BUCKET_NAME}/input/lab2/sample.csv",
                           inferSchema="true",
                           header="true")
 sparkDF.printSchema()
+new_df = sparkDF.withColumn('country_code_2', udf_get_country_code2(col("Country")))
+new_df.printSchema()
+new_df.show(10)
 
 
