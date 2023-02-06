@@ -18,11 +18,13 @@ job_time_string = datetime.now().strftime("%Y%m%d%H%M%S")
 s3_target = output_path + job_time_string
 
 country_lookup_frame = glueContext.create_dynamic_frame.from_options(
-                            format_options = {"withHeader":True, "separator":',', "quoteChar":"\""},
-                            connection_type = "s3",
-                            format = "csv",
-                            connection_options = {"paths": [s3_bucket + "/input/lab4/country_lookup/"], "recurse":True},
-                            transformation_ctx = "country_lookup_frame")
+    format_options={"withHeader": True, "separator": ',', "quoteChar": "\""},
+    connection_type="s3",
+    format="csv",
+    connection_options={"paths": [s3_bucket + "/input/lab4/country_lookup/"], "recurse": True},
+    transformation_ctx="country_lookup_frame")
+
+
 def processBatch(data_frame, batchId):
     if (data_frame.count() > 0):
         dynamic_frame = DynamicFrame.fromDF(data_frame, glueContext, "from_data_frame")
@@ -51,3 +53,8 @@ def processBatch(data_frame, batchId):
                                                               connection_options={"path": s3_target},
                                                               format="csv",
                                                               transformation_ctx="s3sink")
+
+
+dynaFrame = glueContext.create_dynamic_frame.from_catalog(database="glueworkshop-cloudformation",
+                                                          table_name="json-static-table")
+processBatch(dynaFrame.toDF(), "12")
