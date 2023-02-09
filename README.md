@@ -88,3 +88,14 @@ head ~/environment/glue-workshop/data/lab1/csv/sample.csv
 aws s3 cp s3://${BUCKET_NAME}/output/ ~/environment/glue-workshop/output --recursive
 
 ```
+
+```angular2html
+ aws glue create-job \
+    --name glueworkshop_lab4_glue_streaming \
+    --role AWSGlueServiceRole-glueworkshop  \
+    --command "Name=gluestreaming,ScriptLocation=s3://${BUCKET_NAME}/script/lab4/streaming.py,PythonVersion=3" \
+    --glue-version "2.0" \
+    --default-arguments "{\"--s3_bucket\": \"s3://${BUCKET_NAME}/\" }" \
+    --region us-east-2
+
+```
